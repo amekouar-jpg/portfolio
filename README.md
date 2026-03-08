@@ -1,43 +1,54 @@
-# Astro Starter Kit: Minimal
+# Portfolio — Abdelaziz Mekouar
 
-```sh
-npm create astro@latest -- --template minimal
+> Modern, responsive portfolio built with **Astro** and deployed on **Vercel**.
+
+**Live:** [https://portfolio-abdelaziz-mekouar.vercel.app](https://portfolio-abdelaziz-mekouar.vercel.app)
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/        # Astro section components (Hero, About, Skills, …)
+├── data/
+│   └── profile.ts     # ← Single source of truth for all portfolio content
+├── layouts/
+│   └── BaseLayout.astro
+├── pages/
+│   └── index.astro    # Main page — assembles components
+└── styles/
+    └── global.css     # CSS variables, resets, animations
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command          | Description                    |
+| ---------------- | ------------------------------ |
+| `npm install`    | Install dependencies           |
+| `npm run dev`    | Start dev server (localhost)   |
+| `npm run build`  | Build for production           |
+| `vercel --prod`  | Deploy to Vercel               |
 
-Inside of your Astro project, you'll see the following folders and files:
+## How to Update Content
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Edit only **`src/data/profile.ts`** — every section of the site reads from this file.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- Sections with empty arrays or blank strings are automatically hidden from the site and navigation.
+- Add experience, publications, certifications, or any other section by filling in the corresponding field.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Tech Stack
 
-Any static assets, like images, can be placed in the `public/` directory.
+- [Astro](https://astro.build) — Static site framework
+- CSS Variables + Glassmorphism design
+- Lucide SVG icons (inline, no dependencies)
+- [formsubmit.co](https://formsubmit.co) — Contact form backend
+- [Vercel](https://vercel.com) — Deployment & hosting
 
-## 🧞 Commands
+## Author
 
-All commands are run from the root of the project, from a terminal:
+**Abdelaziz Mekouar**
+- Email: a.mekouar@esisa.ac.ma
+- GitHub: [amekouar-jpg](https://github.com/amekouar-jpg)
+- LinkedIn: [abdelaziz-mekouar](https://www.linkedin.com/in/abdelaziz-mekouar-6a4ab438a/)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
