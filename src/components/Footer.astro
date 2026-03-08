@@ -1,0 +1,183 @@
+---
+/**
+ * Footer — 3-column: brand, dynamic nav links, social.
+ * Copyright bar with Astro + Vercel mentions.
+ */
+import { profile } from '../data/profile';
+const { personal, social } = profile;
+
+/* Same dynamic nav logic as Header */
+type NavItem = { label: string; href: string };
+const nav: NavItem[] = [];
+if (profile.about.length)            nav.push({ label: 'About',          href: '#about' });
+if (profile.skills.technical.length)  nav.push({ label: 'Skills',         href: '#skills' });
+if (profile.education.length)         nav.push({ label: 'Education',      href: '#education' });
+if (profile.experience.length)        nav.push({ label: 'Experience',     href: '#experience' });
+if (profile.publications.length)      nav.push({ label: 'Publications',   href: '#publications' });
+if (profile.certifications.length)    nav.push({ label: 'Certifications', href: '#certifications' });
+if (profile.projects.length)          nav.push({ label: 'Projects',       href: '#projects' });
+nav.push({ label: 'Contact', href: '#contact' });
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">
+          <span class="logo-bracket">&lt;</span>
+          <span class="logo-name">{personal.firstName}</span>
+          <span class="logo-bracket">/&gt;</span>
+        </a>
+        <p class="footer-tagline">{personal.title}</p>
+      </div>
+
+      <!-- Navigation -->
+      <div class="footer-nav">
+        <h4 class="footer-heading">Navigation</h4>
+        <ul>
+          {nav.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Social -->
+      <div class="footer-social">
+        <h4 class="footer-heading">Connect</h4>
+        <div class="social-links">
+          {social.github && (
+            <a href={social.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          )}
+          {social.linkedin && (
+            <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <p>&copy; {year} {personal.firstName} {personal.lastName}. All rights reserved.</p>
+      <p class="footer-tech">
+        Built with <span class="gradient-text">Astro</span> &middot; Deployed on <span class="gradient-text">Vercel</span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--glass-border);
+    padding: 60px 0 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+  }
+
+  .footer-logo {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: inline-flex;
+    gap: 2px;
+  }
+  .logo-bracket { color: var(--primary-light); }
+  .logo-name    { color: var(--text-light); }
+
+  .footer-tagline {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .footer-heading {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .footer-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-nav a {
+    font-size: 0.9rem;
+    color: var(--muted);
+    transition: var(--transition);
+  }
+  .footer-nav a:hover {
+    color: var(--primary-light);
+    padding-left: 4px;
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .social-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    transition: var(--transition);
+  }
+  .social-links a:hover {
+    color: var(--primary-light);
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    border-top: 1px solid var(--glass-border);
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .footer-tech {
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      text-align: center;
+    }
+    .footer-nav ul {
+      align-items: center;
+    }
+    .social-links {
+      align-items: center;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+/**
+ * Publications — Academic papers section with metrics.
+ * Only rendered when publications data exists.
+ */
+import { profile } from '../data/profile';
+const { publications } = profile;
+if (!publications.length) return;
+---
+
+<section class="section" id="publications">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Publications
+      </span>
+      <h2 class="section-title">Research <span class="gradient-text">Papers</span></h2>
+    </div>
+
+    <div class="pub-list stagger">
+      {publications.map((pub: any) => (
+        <div class="pub-card glass-card">
+          <span class="pub-year">{pub.year}</span>
+          <h3 class="pub-title">
+            {pub.url ? (
+              <a href={pub.url} target="_blank" rel="noopener noreferrer">
+                {pub.title}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            ) : pub.title}
+          </h3>
+          {pub.journal && <p class="pub-journal">{pub.journal}</p>}
+          {pub.authors && <p class="pub-authors">{pub.authors}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pub-list {
+    display: grid;
+    gap: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .pub-card {
+    padding: 24px;
+  }
+  .pub-year {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.08);
+    padding: 3px 12px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+  }
+  .pub-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-top: 12px;
+  }
+  .pub-title a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+  }
+  .pub-title a:hover { color: var(--primary-light); }
+  .pub-journal {
+    font-size: 0.9rem;
+    color: var(--accent-light);
+    margin-top: 4px;
+  }
+  .pub-authors {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+</style>

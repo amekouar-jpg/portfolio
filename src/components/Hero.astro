@@ -1,0 +1,288 @@
+---
+/**
+ * Hero — Full-height opening section.
+ * Animated name gradient, availability badge, avatar with ring, CTA buttons, stats grid.
+ */
+import { profile } from '../data/profile';
+const { personal, social, stats } = profile;
+---
+
+<section class="hero" id="hero">
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <!-- Badge -->
+      <div class="availability-badge reveal">
+        <span class="pulse-dot"></span>
+        Available for Opportunities
+      </div>
+
+      <!-- Name -->
+      <h1 class="hero-name reveal">
+        <span class="gradient-text">{personal.firstName}</span>
+        <span>{personal.lastName}</span>
+      </h1>
+
+      <!-- Title -->
+      <p class="hero-title reveal">{personal.title}</p>
+      <p class="hero-subtitle reveal">{personal.subtitle}</p>
+
+      <!-- CTAs -->
+      <div class="hero-ctas reveal">
+        <a href="#projects" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          View Projects
+        </a>
+        <a href="#contact" class="btn btn-outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact Me
+        </a>
+      </div>
+    </div>
+
+    <!-- Avatar -->
+    <div class="hero-avatar reveal">
+      <div class="avatar-ring">
+        <img
+          src={personal.avatar}
+          alt={`${personal.firstName} ${personal.lastName}`}
+          width="280"
+          height="280"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  {stats.length > 0 && (
+    <div class="container">
+      <div class="hero-stats stagger">
+        {stats.map((s) => (
+          <div class="stat-card glass-card">
+            <span class="stat-value gradient-text">{s.value}</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator" aria-hidden="true">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 90px;
+    padding-bottom: 40px;
+    position: relative;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 60px;
+  }
+
+  .hero-content {
+    max-width: 640px;
+  }
+
+  /* Badge */
+  .availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.08);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    padding: 8px 18px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Name */
+  .hero-name {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero-name span:last-child {
+    color: var(--text-light);
+    display: block;
+  }
+
+  .hero-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+    max-width: 500px;
+  }
+
+  /* CTAs */
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: var(--transition);
+  }
+
+  .btn-primary {
+    background: var(--gradient);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border-light);
+    color: var(--text-light);
+    background: var(--glass);
+  }
+  .btn-outline:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Avatar */
+  .hero-avatar {
+    position: relative;
+  }
+  .avatar-ring {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    padding: 4px;
+    background: var(--gradient);
+    animation: spin-slow 8s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatar-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .avatar-ring:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Stats */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 50px;
+  }
+
+  .stat-card {
+    text-align: center;
+    padding: 24px 16px;
+  }
+
+  .stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .scroll-line {
+    width: 2px;
+    height: 40px;
+    background: var(--gradient);
+    border-radius: 2px;
+    animation: float 2s ease-in-out infinite;
+    opacity: 0.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 40px;
+    }
+    .hero-content {
+      order: 2;
+      max-width: 100%;
+    }
+    .hero-avatar {
+      order: 1;
+      justify-self: center;
+    }
+    .avatar-ring {
+      width: 200px;
+      height: 200px;
+    }
+    .hero-ctas {
+      justify-content: center;
+    }
+    .hero-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .availability-badge {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-subtitle {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>

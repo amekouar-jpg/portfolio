@@ -1,0 +1,28 @@
+---
+/**
+ * Index page — Assembles all portfolio sections.
+ * Sections with no data are automatically hidden by their respective components.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Skills from '../components/Skills.astro';
+import Education from '../components/Education.astro';
+import Experience from '../components/Experience.astro';
+import Publications from '../components/Publications.astro';
+import Certifications from '../components/Certifications.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<BaseLayout>
+  <Hero />
+  <About />
+  <Skills />
+  <Education />
+  <Experience />
+  <Publications />
+  <Certifications />
+  <Projects />
+  <Contact />
+</BaseLayout>

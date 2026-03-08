@@ -1,0 +1,150 @@
+---
+/**
+ * Education — Vertical timeline with badges.
+ */
+import { profile } from '../data/profile';
+const { education } = profile;
+if (!education.length) return;
+---
+
+<section class="section" id="education">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg>
+        Education
+      </span>
+      <h2 class="section-title">Academic <span class="gradient-text">Background</span></h2>
+      <p class="section-subtitle">My educational journey and qualifications.</p>
+    </div>
+
+    <div class="timeline">
+      {education.map((edu, i) => (
+        <div class="timeline-item reveal">
+          <div class="timeline-dot">
+            {i === 0 && <span class="latest-badge">Latest</span>}
+          </div>
+          <div class="timeline-card glass-card">
+            <span class="timeline-period">{edu.period}</span>
+            <h3 class="timeline-degree">{edu.degree}</h3>
+            {edu.institutionUrl ? (
+              <a href={edu.institutionUrl} target="_blank" rel="noopener noreferrer" class="timeline-institution">
+                {edu.institution}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            ) : (
+              <p class="timeline-institution">{edu.institution}</p>
+            )}
+            <p class="timeline-desc">{edu.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 36px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -40px;
+    top: 28px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gradient);
+    border: 3px solid var(--bg);
+    z-index: 1;
+  }
+
+  .latest-badge {
+    position: absolute;
+    left: 20px;
+    top: -6px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    padding: 2px 10px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  .timeline-card {
+    padding: 28px;
+  }
+
+  .timeline-period {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid var(--border);
+    padding: 4px 14px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+  }
+
+  .timeline-degree {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+
+  .timeline-institution {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95rem;
+    color: var(--primary-light);
+    margin-bottom: 12px;
+    transition: var(--transition);
+  }
+
+  a.timeline-institution:hover {
+    color: var(--accent-light);
+  }
+
+  .timeline-desc {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 768px) {
+    .timeline {
+      padding-left: 30px;
+    }
+    .timeline::before {
+      left: 8px;
+    }
+    .timeline-dot {
+      left: -30px;
+    }
+  }
+</style>

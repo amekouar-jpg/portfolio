@@ -1,0 +1,237 @@
+---
+/**
+ * Header — Sticky navigation with glassmorphism.
+ * Generates nav links dynamically based on available profile data.
+ * Mobile hamburger menu with drawer overlay.
+ */
+import { profile } from '../data/profile';
+
+/* Build navigation items dynamically */
+type NavItem = { label: string; href: string };
+const nav: NavItem[] = [];
+
+if (profile.about.length)                          nav.push({ label: 'About',          href: '#about' });
+if (profile.skills.technical.length)                nav.push({ label: 'Skills',         href: '#skills' });
+if (profile.education.length)                       nav.push({ label: 'Education',      href: '#education' });
+if (profile.experience.length)                      nav.push({ label: 'Experience',     href: '#experience' });
+if (profile.publications.length)                    nav.push({ label: 'Publications',   href: '#publications' });
+if (profile.certifications.length)                  nav.push({ label: 'Certifications', href: '#certifications' });
+if (profile.projects.length)                        nav.push({ label: 'Projects',       href: '#projects' });
+nav.push({ label: 'Contact', href: '#contact' });
+---
+
+<header class="header" id="header">
+  <div class="container header-inner">
+    <!-- Logo -->
+    <a href="#" class="header-logo">
+      <span class="logo-bracket">&lt;</span>
+      <span class="logo-name">{profile.personal.firstName}</span>
+      <span class="logo-bracket">/&gt;</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="header-nav" aria-label="Main navigation">
+      {nav.map((item) => (
+        <a href={item.href} class="nav-link">{item.label}</a>
+      ))}
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <nav class="drawer-nav">
+      {nav.map((item) => (
+        <a href={item.href} class="drawer-link">{item.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(10, 15, 30, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: var(--transition);
+  }
+  .header.scrolled {
+    background: rgba(10, 15, 30, 0.92);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.25);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+
+  /* Logo */
+  .header-logo {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    gap: 2px;
+    transition: var(--transition);
+  }
+  .header-logo:hover { opacity: 0.8; }
+  .logo-bracket { color: var(--primary-light); }
+  .logo-name   { color: var(--text-light); }
+
+  /* Desktop nav */
+  .header-nav {
+    display: flex;
+    gap: 8px;
+  }
+  .nav-link {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted);
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--text-light);
+    background: rgba(99, 102, 241, 0.1);
+  }
+  .nav-link.active {
+    color: var(--primary-light);
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+    z-index: 1010;
+  }
+  .hamburger-bar {
+    width: 24px;
+    height: 2px;
+    background: var(--text-light);
+    border-radius: 2px;
+    transition: var(--transition);
+  }
+  .hamburger.open .hamburger-bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .hamburger.open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open .hamburger-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Mobile drawer */
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1005;
+  }
+  .mobile-drawer.open {
+    display: flex;
+  }
+  .drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+  }
+  .drawer-nav {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+  }
+  .drawer-link {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-light);
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: var(--transition);
+  }
+  .drawer-link:hover {
+    background: rgba(99,102,241,0.15);
+    color: var(--primary-light);
+  }
+
+  @media (max-width: 768px) {
+    .header-nav { display: none; }
+    .hamburger   { display: flex; }
+  }
+</style>
+
+<script>
+  /* ── Header scroll state ── */
+  const header = document.getElementById('header')!;
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  /* ── Hamburger / drawer ── */
+  const hamburger = document.getElementById('hamburger')!;
+  const drawer    = document.getElementById('drawer')!;
+  const backdrop  = document.getElementById('drawer-backdrop')!;
+
+  function toggleDrawer(open?: boolean) {
+    const isOpen = open ?? !drawer.classList.contains('open');
+    drawer.classList.toggle('open', isOpen);
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    drawer.setAttribute('aria-hidden', String(!isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', () => toggleDrawer());
+  backdrop.addEventListener('click', () => toggleDrawer(false));
+  drawer.querySelectorAll('.drawer-link').forEach((link) =>
+    link.addEventListener('click', () => toggleDrawer(false))
+  );
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggleDrawer(false);
+  });
+
+  /* ── Active link highlight via IntersectionObserver ── */
+  const sections = document.querySelectorAll<HTMLElement>('section[id]');
+  const allLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link');
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          allLinks.forEach((link) => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -70% 0px' }
+  );
+
+  sections.forEach((s) => sectionObserver.observe(s));
+</script>
