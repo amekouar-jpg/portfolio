@@ -30,7 +30,7 @@ export const profile = {
     { label: "Projects", value: "4+" },
     { label: "Technologies", value: "10+" },
     { label: "GitHub Repos", value: "4" },
-    { label: "Year", value: "2025" },
+    { label: "Year", value: "2026" },
   ],
 
   /* ───────── About ───────── */
